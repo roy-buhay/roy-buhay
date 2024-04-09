@@ -1,0 +1,150 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MainCard from "../components/main/Card.astro";
+import AboutCard from "../components/about/Card.astro";
+import AboutModal from "../components/about/Modal.astro";
+import ProjectsCard from "../components/projects/Card.astro";
+import ProjectsModal from "../components/projects/Modal.astro";
+---
+
+<Layout title="Welcome to Astro.">
+    <main id="main" class="hidden">
+        <MainCard />
+        <AboutCard />
+        <ProjectsCard />
+    </main>
+    <AboutModal />
+    <ProjectsModal />
+</Layout>
+
+<style is:global>
+    main {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        grid-template-rows: 1fr 1fr;
+        row-gap: 0.5rem;
+        width: 100%;
+        height: 100%;
+        max-width: var(--max-width);
+        max-height: var(--max-height);
+        transition: transform 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        will-change: auto;
+        background-color: var(--main-color);
+        overflow: hidden;
+    }
+    main > div {
+        width: 100%;
+        height: 100%;
+    }
+    main > div:first-of-type {
+        grid-row: 1 / -1;
+    }
+
+    .hidden {
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        justify-conent: center;
+    }
+
+    .hidden:before {
+        content: "...";
+        display: block;
+        text-align: center;
+    }
+
+    .scale-down {
+        transform: scale(0.7);
+        z-index: -9999;
+    }
+
+    .animate {
+        transition-property: opacity, transform;
+        transition-duration: 1s;
+        transition-timing-function: cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        opacity: 0;
+    }
+
+    .slide-up {
+        animation-name: cardSlideUp;
+        animation-duration: 0.8s;
+        animation-fill-mode: both;
+    }
+
+    @keyframes cardSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(15%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @media screen and (max-width: 900px) {
+        main {
+            grid-template-columns: 100%;
+            grid-template-rows: 1fr;
+        }
+    }
+</style>
+
+<script>
+    const main = document.getElementById("main");
+    const modals = document.querySelectorAll(".modal");
+    const aboutCard = document.querySelector("[data-about-card]");
+    const projectsCard = document.querySelector("[data-projects-card]");
+    const aboutModal = document.querySelector("[data-about-modal]");
+    const projectsModal = document.querySelector("[data-projects-modal]");
+    const closeModal = document.querySelectorAll("[data-close-modal]");
+
+    closeModal.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            modals.forEach((modal) => {
+                modal.classList.remove("show");
+            });
+            if (main) main.classList.remove("scale-down");
+        });
+    });
+
+    if (aboutCard) {
+        aboutCard.addEventListener("click", () => {
+            if (main) main.classList.add("scale-down");
+            if (aboutModal) {
+                aboutModal.style.display = "flex";
+                aboutModal.classList.add("show");
+            }
+        });
+    }
+
+    if (projectsCard) {
+        projectsCard.addEventListener("click", () => {
+            if (main) main.classList.add("scale-down");
+            if (projectsModal) {
+                projectsModal.style.display = "flex";
+                projectsModal.classList.add("show");
+            }
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const wrapper = document.getElementById("main");
+        setTimeout(() => {
+            wrapper.classList.remove("hidden");
+        }, 600);
+
+        const elements = document.querySelectorAll(".animate");
+        let delay = 0;
+
+        setTimeout(() => {
+            elements.forEach(function (element) {
+                setTimeout(function () {
+                    element.classList.add("slide-up");
+                }, delay);
+                delay += 60;
+            });
+        }, 700);
+    });
+</script>

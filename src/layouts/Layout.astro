@@ -1,0 +1,446 @@
+---
+interface Props {
+    title: string;
+}
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Astro description" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;400;500;600&family=DM+Serif+Display&family=Karla:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body>
+        <slot />
+        <style is:global>
+            :root {
+                --base-color: rgb(4 30 57);
+                --main-color: rgb(7 41 76);
+                --secondary-color: rgb(7 53 95);
+                --secondary-hover-color: rgb(4 47 86);
+                --tertiary-color: rgb(4 47 84);
+                --tertiary-hover-color: rgb(4 44 80);
+                --close-bg-color: rgb(27 68 113);
+                --close-text-color: rgb(91 119 148);
+
+                --page-title-color: #dee5ec;
+                --page-subtitle-color: #fff;
+                --title-color: #dee5ec;
+                --description-color: rgb(115 138 158);
+                --page-title: 800 3.4rem/1 "Chivo Mono", serif;
+                --page-subtitle: 800 1.8rem/1 "Chivo Mono", serif;
+                --page-subtitle-mono: 600 1.7rem/1.4 "Chivo Mono";
+                --title: 800 1rem/1 "Karla", "Chivo Mono";
+                --description: 300 0.75rem/1.4 "Chivo Mono";
+
+                --max-width: 1250px;
+                --max-height: 42rem;
+                --card-padding: 2.3rem;
+
+                --corner-radius: 0.4rem;
+
+                --base-font: system-ui, sans-serif;
+
+                --accent: 136, 58, 234;
+                --accent-light: 224, 204, 250;
+                --accent-dark: 49, 10, 101;
+                --accent-gradient: linear-gradient(
+                    45deg,
+                    rgb(var(--accent)),
+                    rgb(var(--accent-light)) 30%,
+                    white 60%
+                );
+            }
+
+            @media screen and (max-width: 900px) {
+                :root {
+                    --max-height: unset;
+                    --content-mainpadding: 3rem 1rem 0;
+                    --content-padding: 1rem 1rem;
+                    --page-title: 800 2.2rem/1 "Chivo Mono", serif;
+                    --page-subtitle: bold 1.5rem/1 "Chivo Mono", serif;
+                }
+            }
+
+            ::-webkit-scrollbar {
+                width: 6px;
+                height: 5px;
+            }
+            ::-webkit-scrollbar-track {
+                /* background: #041f38; */
+            }
+            ::-webkit-scrollbar-thumb {
+                background: #0c3e6b;
+                border-radius: 0.5rem;
+            }
+            ::-webkit-scrollbar-thumb:hover {
+                background: #9e9e9e;
+            }
+
+            /* Box sizing rules */
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+            }
+
+            /* Prevent font size inflation */
+            html {
+                -moz-text-size-adjust: none;
+                -webkit-text-size-adjust: none;
+                text-size-adjust: none;
+            }
+
+            /* Remove default margin in favour of better control in authored CSS */
+            body,
+            h1,
+            h2,
+            h3,
+            h4,
+            p,
+            figure,
+            blockquote,
+            dl,
+            dd {
+                margin-block-end: 0;
+            }
+
+            /* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+            ul[role="list"],
+            ol[role="list"] {
+                list-style: none;
+            }
+
+            /* Set core body defaults */
+            body {
+                min-height: 100vh;
+                line-height: 1.5;
+                margin: 0;
+                transition: filter 0.7s ease-out;
+            }
+
+            /* Set shorter line heights on headings and interactive elements */
+            h1,
+            h2,
+            h3,
+            h4,
+            button,
+            input,
+            label {
+                line-height: 1.1;
+            }
+
+            /* Balance text wrapping on headings */
+            h1,
+            h2,
+            h3,
+            h4 {
+                text-wrap: balance;
+            }
+
+            /* A elements that don't have a class get default styles */
+            a:not([class]) {
+                text-decoration-skip-ink: auto;
+                color: currentColor;
+            }
+
+            /* Make images easier to work with */
+            img,
+            picture {
+                max-width: 100%;
+                display: block;
+            }
+
+            /* Inherit fonts for inputs and buttons */
+            input,
+            button,
+            textarea,
+            select {
+                font: inherit;
+            }
+
+            /* Make sure textareas without a rows attribute are not tiny */
+            textarea:not([rows]) {
+                min-height: 10em;
+            }
+
+            /* Anything that has been anchored to should have extra scroll margin */
+            :target {
+                scroll-margin-block: 5ex;
+            }
+
+            html {
+                font-family: var(--base-font);
+                background: var(--main-color);
+                scroll-behavior: smooth;
+                height: 100%;
+                width: 100%;
+            }
+            body {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            h1 {
+                text-wrap: balance;
+                font: var(--page-title);
+                color: var(--page-title-color);
+            }
+
+            h3 {
+                font: var(--page-subtitle);
+                color: var(--page-subtitle-color);
+                margin-top: 0;
+                margin-bottom: 0.4rem;
+            }
+
+            p {
+                text-wrap: balance;
+                font: var(--description);
+                color: var(--description-color);
+                line-height: 1.5;
+            }
+
+            .relative {
+                position: relative;
+            }
+
+            .details {
+                transform: translateX(0) !important;
+            }
+
+            /****************/
+            /*     Modal    */
+            /****************/
+            .modal {
+                /* --animation-in-settings: 600ms ease forwards;
+                --animation-out-settings: 600ms ease forwards; */
+
+                /* -webkit-animation: slideDown var(--animation-in-settings);
+                animation: slideDown var(--animation-in-settings); */
+
+                position: fixed;
+                /* top: 0;
+                left: 50%; */
+                transform: translate(0, 150%);
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                transition-delay: 0.15s;
+                background-color: var(--secondary-color);
+
+                width: 100%;
+                height: 100%;
+                max-width: var(--max-width);
+                max-height: var(--max-height);
+
+                align-items: start;
+                justify-content: space-between;
+                border-radius: 0.7rem;
+                z-index: 999;
+                overflow: hidden;
+            }
+            .modal:after {
+                content: "";
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: -o-radial-gradient(
+                        20% 30%,
+                        circle,
+                        rgba(0, 0, 0, 0),
+                        #000
+                    ),
+                    url("../../src/assets/images/noise.svg");
+                background: radial-gradient(
+                        circle at 20% 30%,
+                        rgba(0, 0, 0, 0),
+                        #000
+                    ),
+                    url("../../src/assets/images/noise.svg");
+                -webkit-filter: contrast(200%);
+                filter: contrast(250%);
+                mix-blend-mode: screen;
+                opacity: 0.5;
+            }
+            .modal__btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+                z-index: 2;
+                width: 3rem;
+                height: 3rem;
+                margin: 0.5rem;
+                padding: 0.5rem;
+                font-size: 1.5rem;
+                color: var(--close-text-color);
+                appearance: none;
+                border: none;
+                border-radius: 100%;
+                background-color: var(--close-bg-color);
+                transition: transform 0.1s ease-out;
+                cursor: pointer;
+            }
+            .modal__btn:active {
+                transform: scale(0.9);
+            }
+            .modal.show {
+                /* -webkit-animation: slideUp var(--animation-in-settings);
+                animation: slideUp var(--animation-in-settings); */
+                transform: translate(0%, 0%);
+            }
+            .modal.hide {
+                -webkit-animation: slideDown var(--animation-in-settings);
+                animation: slideDown var(--animation-in-settings);
+            }
+
+            /****************/
+            /*     Card     */
+            /****************/
+            .card {
+                border-radius: var(--corner-radius);
+                overflow: hidden;
+            }
+            .card__content {
+                text-align: left;
+                position: relative;
+                z-index: 2;
+                background-color: var(--secondary-color);
+                border-radius: var(--corner-radius);
+                padding: var(--card-padding);
+                cursor: pointer;
+                overflow: hidden;
+                transition: transform 0.1s ease-out;
+            }
+            .card__content:after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 0.5;
+                background: -o-radial-gradient(
+                        65% 15%,
+                        circle,
+                        rgba(0, 0, 0, 0),
+                        #000
+                    ),
+                    url("../../src/assets/images/noise.svg");
+                background: radial-gradient(
+                        circle at 65% 15%,
+                        rgba(0, 0, 0, 0),
+                        #000
+                    ),
+                    url("../../src/assets/images/noise.svg");
+                -webkit-filter: contrast(200%);
+                filter: contrast(250%);
+                mix-blend-mode: screen;
+            }
+            .card__content:active {
+                background-color: var(--secondary-hover-color);
+                transform: scale(0.99);
+            }
+            .card__img {
+                width: 100%;
+                height: auto;
+            }
+            @media screen and (max-width: 1200px) {
+                .card__img {
+                    width: 420px;
+                    min-width: 420px;
+                    margin-left: -1rem;
+                }
+            }
+            @media screen and (max-width: 1024px) {
+                .card__content {
+                    height: 22rem;
+                    width: 95%;
+                    margin: 0 auto;
+                }
+                .card__img {
+                    min-width: unset;
+                    margin-top: 1rem;
+                    margin-left: 0;
+                }
+            }
+            @media screen and (max-width: 900px) {
+                .card__content {
+                    height: 26rem;
+                }
+                .card__img {
+                    width: 500px;
+                    margin: 20px auto 0;
+                    max-width: unset;
+                }
+            }
+            @media screen and (max-width: 600px) {
+                .card__content {
+                    height: 21rem;
+                }
+                .card__img {
+                    width: 360px;
+                    margin: 20px auto 0;
+                    min-width: unset;
+                    max-width: unset;
+                    position: relative;
+                    left: -1rem;
+                }
+            }
+
+            /****************/
+            /*  Animations  */
+            /****************/
+            @keyframes slideUp {
+                from {
+                    transform: translateY(100%);
+                }
+
+                to {
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes slideDown {
+                from {
+                    transform: translateY(0);
+                }
+
+                to {
+                    transform: translateY(150%);
+                }
+            }
+
+            @keyframes float {
+                0% {
+                    transform: translatey(0);
+                }
+                50% {
+                    transform: translatey(-12px);
+                }
+                100% {
+                    transform: translatey(0);
+                }
+            }
+        </style>
+    </body>
+</html>

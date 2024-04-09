@@ -1,0 +1,39 @@
+---
+export interface Props {
+    icon: string;
+    showLabel?: boolean;
+    size?: string;
+    color?: string;
+}
+
+const { icon, showLabel = true } = Astro.props as Props;
+const { default: rawIcon } = await import(`/src/assets/svg/${icon}.svg?raw`);
+---
+
+<div class="icon__container">
+    <span class="icon"><Fragment set:html={rawIcon} /></span>
+    {showLabel && <p class="icon__label">{icon}</p>}
+</div>
+
+<style>
+    :root {
+        --svg-fill: #839aaf;
+    }
+    .icon__container {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        color: var(--svg-fill);
+        /* fill: var(--svg-fill); */
+    }
+    .icon {
+        width: 1.3rem;
+        height: 1.3rem;
+        display: block;
+    }
+    .icon__label {
+        line-height: 1;
+        margin-top: 0;
+        text-transform: capitalize;
+    }
+</style>

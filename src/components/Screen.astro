@@ -1,0 +1,99 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+    path: string;
+    name: string;
+    customClass: string;
+}
+const { path, name, customClass } = Astro.props as Props;
+const { default: image } = await import(
+    `/src/assets/images/${name}/${name}-${path}`
+);
+
+let loaded: boolean = false;
+const handleLoad = () => {
+    loaded = true;
+};
+---
+
+<li class={`splide__slide ${customClass}`}>
+    <Image
+        src={image}
+        alt={name}
+        onLoad={handleLoad()}
+        loading="lazy"
+        decoding="async"
+        style={{ opacity: loaded ? "1" : "0" }}
+    />
+    {loaded ? null : <div class="loader">Loading...</div>}
+</li>
+
+<style>
+    .loader {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        color: white;
+    }
+    .splide__slide {
+        margin-left: -1rem;
+        margin-right: -5rem;
+        border-radius: 0.4rem;
+        overflow: hidden;
+        display: inline-block;
+        position: relative;
+        width: 16rem;
+        -webkit-box-shadow: 0 0 1rem 0 #042f5430;
+        box-shadow: 0 0 1rem 0 #042f5430;
+        -webkit-transition: margin 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        -o-transition: margin 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        transition: margin 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        background-color: #062f54;
+    }
+    .splide__slide img {
+        opacity: 0;
+        display: block;
+        height: auto;
+        width: 100%;
+        transition: opacity 0.4s ease-out;
+    }
+    .splide__slide.mobile {
+        width: 19rem;
+        margin-left: -1rem;
+        margin-right: 2rem;
+    }
+    .splide__slide.desktop {
+        width: 42rem;
+        margin-left: -1rem;
+        margin-right: 2rem;
+    }
+    @media screen and (max-width: 1000px) {
+        .splide__slide {
+            width: 13rem;
+        }
+    }
+    @media screen and (max-width: 750px) {
+        .splide__slide {
+            width: 14rem;
+            margin-left: 0;
+            margin-right: -3rem;
+        }
+        .splide__slide.mobile {
+            width: 15rem;
+        }
+    }
+    @media screen and (max-width: 600px) {
+        .splide__slide {
+            width: 12.5rem;
+        }
+    }
+    @media screen and (max-width: 500px) {
+        .splide__slide {
+            width: 10rem;
+        }
+    }
+</style>

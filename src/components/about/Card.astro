@@ -1,0 +1,23 @@
+---
+import { Image } from "astro:assets";
+import about from "@assets/images/about-mini3.png";
+---
+
+<div data-about-card class="animate card">
+    <div class="card__content">
+        <h3 class="animate">About Me</h3>
+        <p class="animate">A bit of background and what I'm studying</p>
+        <span>
+            <Image src={about} alt="About Me" class="animate card__img" />
+        </span>
+    </div>
+</div>
+
+<style>
+    .card__content {
+        background-color: var(--secondary-color);
+    }
+    .card__content:active {
+        background-color: var(--secondary-hover-color);
+    }
+</style>

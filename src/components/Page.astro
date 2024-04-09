@@ -1,0 +1,174 @@
+---
+import { Image } from "astro:assets";
+
+import Layout from "@layout/Layout.astro";
+import Icon from "@components/Icon.astro";
+import Screens from "@components/Screens.astro";
+import Screen from "@components/Screen.astro";
+
+interface Props {
+    path: string;
+    title: string;
+    desc: string;
+    width: number;
+    roles: string[];
+    technologies: string[];
+    screenshots: string[];
+}
+const { path, title, desc, width, roles, technologies, screenshots } =
+    Astro.props as Props;
+const { default: logo } = await import(`/src/assets/images/${title}/${path}`);
+---
+
+<div class="page">
+    <button class="back"> Back </button>
+    <div class="page__content">
+        <Image
+            src={logo}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+            class="page__logo"
+            style={{ width: `${width}rem` }}
+        />
+        <p class="page__description">{desc}</p>
+        <div class="page__icons">
+            {roles.map((role) => <p>{role}</p>)}
+        </div>
+        <div class="page__icons">
+            {technologies.map((tech) => <Icon icon={`${tech}`} />)}
+        </div>
+    </div>
+
+    <Screens slot="images" index="10">
+        {
+            screenshots.map((screen) => (
+                <Screen
+                    path={screen.path}
+                    name={title}
+                    customClass={screen.class}
+                />
+            ))
+        }
+    </Screens>
+</div>
+
+<style>
+    .back {
+        position: absolute;
+        left: 0;
+        right: auto;
+        top: 0;
+        z-index: 10;
+        background: transparent;
+        border: none;
+        color: #8ca5ba;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        font-family: "Karla";
+    }
+    .back:active {
+        -webkit-transform: scale(0.95);
+        -ms-transform: scale(0.95);
+        transform: scale(0.95);
+    }
+
+    .page {
+        background-color: var(--secondary-color);
+        width: 100%;
+        height: 100%;
+        max-width: var(--max-width);
+        border-radius: 0.7rem;
+        position: relative;
+        padding-bottom: 4rem;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 9;
+        -webkit-transform: translateX(100%);
+        -ms-transform: translateX(100%);
+        transform: translateX(100%);
+        -webkit-transition: -webkit-transform 0.3s ease-out;
+        transition: -webkit-transform 0.3s ease-out;
+        -o-transition: transform 0.3s ease-out;
+        transition: transform 0.3s ease-out;
+        transition:
+            transform 0.3s ease-out,
+            -webkit-transform 0.3s ease-out;
+        -webkit-transition-delay: 0.4s;
+        -o-transition-delay: 0.4s;
+        transition-delay: 0.4s;
+    }
+    .page:after {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: -o-radial-gradient(85% -10%, circle, rgba(0, 0, 0, 0), #000),
+            url("../../src/assets/images/noise.svg");
+        background: radial-gradient(circle at 85% -10%, rgba(0, 0, 0, 0), #000),
+            url("../../src/assets/images/noise.svg");
+        -webkit-filter: contrast(200%);
+        filter: contrast(250%);
+        mix-blend-mode: screen;
+        opacity: 0.5;
+    }
+    .page__content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        text-align: center;
+        margin: 6rem auto 3rem auto;
+        width: 90%;
+        max-width: var(--max-width);
+    }
+    .page__logo {
+        height: auto;
+        width: 6.5rem;
+        max-width: unset;
+        margin-bottom: 0.5rem;
+    }
+    .page__description {
+        font-size: 0.9rem;
+    }
+    .page__icons {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: start;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-column-gap: 1.2rem;
+        -moz-column-gap: 1.2rem;
+        column-gap: 1.2rem;
+        row-gap: 0.8rem;
+        margin: 1.5rem 0 0;
+    }
+
+    @media screen and (max-width: 750px) {
+        .page__icons {
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+    }
+</style>

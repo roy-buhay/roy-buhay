@@ -1,0 +1,25 @@
+---
+import { projects } from "@data/projects";
+import Page from "@components/Page.astro";
+---
+
+<div>
+    {
+        projects &&
+            projects.map((project) => (
+                <>
+                    {project.title === "crateclub" && (
+                        <Page
+                            path={project.path}
+                            title={project.title}
+                            desc={project.desc}
+                            width={project.pageWidth}
+                            roles={project.roles}
+                            technologies={project.technologies}
+                            screenshots={project.screenshots}
+                        />
+                    )}
+                </>
+            ))
+    }
+</div>

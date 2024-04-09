@@ -1,0 +1,189 @@
+---
+import { Image } from "astro:assets";
+import avatar1 from "@assets/images/avatar-1.svg";
+import avatar2 from "@assets/images/avatar-2.svg";
+import avatar3 from "@assets/images/avatar-3.svg";
+---
+
+<div data-projects-card class="animate card">
+    <div class="card__content">
+        <span>
+            <h3 class="animate">Featured Works</h3>
+            <p class="animate">Here are a few projects I've worked on</p>
+        </span>
+        <div>
+            <div class="animate">
+                <span class="phone">
+                    <span class="phone-camera"></span>
+                    <span class="phone-speaker"></span>
+                    <span class="phone-img">
+                        <span class="phone-search"></span>
+                        <span class="phone-message">
+                            <Image src={avatar1} alt="Avatar 1" />
+                            <span>
+                                <p>新木優子</p>
+                                <small> 美味しい染みる…</small>
+                            </span>
+                        </span>
+                        <span class="phone-message">
+                            <Image src={avatar2} alt="Avatar 2" />
+                            <span>
+                                <p>Yui Aragaki</p>
+                                <small> Are you free tonight?</small>
+                            </span>
+                        </span>
+                        <span class="phone-message">
+                            <Image src={avatar3} alt="Avatar 3" />
+                            <span>
+                                <p>石田百合子</p>
+                                <small> 🤔やろうと意識してやってるこ...</small>
+                            </span>
+                        </span>
+                        <span class="phone-message">
+                            <img
+                                src="../assets/images/avatar-4.svg"
+                                alt="Avatar 4"
+                            />
+                            <span>
+                                <p>やろうと意識してやっ</p>
+                                <small> Are you free tonight?</small>
+                            </span>
+                        </span>
+                    </span>
+                </span>
+            </div>
+        </div>
+        <small class="noise"></small>
+    </div>
+</div>
+
+<style>
+    .card__content {
+        background-color: var(--tertiary-color);
+    }
+    .card__content:active {
+        background-color: var(--tertiary-hover-color);
+    }
+    .phone {
+        background-color: #0b3963;
+        display: block;
+        width: 210px;
+        height: 100%;
+        margin: 0 auto;
+        margin-top: 2rem;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        position: relative;
+        padding: 0 0.8rem;
+        text-align: center;
+        overflow: hidden;
+    }
+    .phone > span {
+        display: block;
+    }
+    .phone:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: -o-linear-gradient(250deg, rgba(0, 0, 0, 0), #000),
+            url("./src/assets/images/noise.svg");
+        background: linear-gradient(200deg, rgba(0, 0, 0, 0), #000),
+            url("./src/assets/images/noise.svg");
+        -webkit-filter: contrast(200%);
+        filter: contrast(200%);
+        mix-blend-mode: screen;
+        opacity: 0.3;
+    }
+    .phone-speaker {
+        background-color: #264870;
+        display: inline-block;
+        border-radius: 50px;
+        width: 50px;
+        height: 8px;
+        margin: 8% auto 0;
+    }
+    .phone-camera {
+        background-color: #264870;
+        border-radius: 50px;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        top: 5%;
+        right: 32%;
+    }
+    .phone-img {
+        background: -o-linear-gradient(45deg, #f99c7e, #c93f00);
+        background: linear-gradient(45deg, #f99c7e, #c93f00);
+        height: 100%;
+        border-radius: 0.1rem;
+        margin-top: 1.2rem;
+        padding-top: 0.2rem;
+    }
+    .phone-img:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: -o-radial-gradient(55% 42%, circle, rgba(0, 0, 0, 0), #000),
+            url("./src/assets/images/noise.svg");
+        background: radial-gradient(circle at 55% 42%, rgba(0, 0, 0, 0), #000),
+            url("./src/assets/images/noise.svg");
+        -webkit-filter: contrast(200%);
+        filter: contrast(200%);
+        mix-blend-mode: screen;
+        opacity: 0.5;
+    }
+    .phone-message {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        padding: 0.4rem 0.5rem 0;
+    }
+    .phone-message img {
+        width: 2.2rem;
+        height: 2.2rem;
+        border-radius: 100%;
+    }
+    .phone-message > span {
+        -webkit-box-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        margin-left: 0.5rem;
+        text-align: left;
+    }
+    .phone-message > span p {
+        font-family: "Karla", sans-serif;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: white;
+        width: 100%;
+    }
+    .phone-message > span small {
+        font-family: "Karla", sans-serif;
+        font-size: 0.6rem;
+        display: block;
+        color: #e8b8ac;
+    }
+    .phone-search {
+        background-color: #e27854bd;
+        display: block;
+        height: 1.4rem;
+        margin: 0.5em;
+        border-radius: 0.2rem;
+    }
+
+    @media screen and (max-width: 900px) {
+        .phone {
+            width: 200px;
+        }
+    }
+</style>

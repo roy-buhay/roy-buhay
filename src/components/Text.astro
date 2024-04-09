@@ -1,0 +1,113 @@
+---
+import { Image } from "astro:assets";
+import newTab from "@assets/images/newTab.svg";
+import Icon from "@components/Icon.astro";
+
+export interface Props {
+    path: string;
+    alt: string;
+    link: string;
+    desc: string;
+    title: string;
+    width: number;
+    url: string;
+    technologies: string[];
+}
+
+const { path, alt, link, desc, title, width, technologies, url } =
+    Astro.props as Props;
+const { default: image } = await import(`/src/assets/images/${title}/${path}`);
+---
+
+<div class="text">
+    <a href={`#${title}`} class="text_link" data-title={title}>
+        <Image
+            src={image}
+            alt={alt}
+            style={{ width: `${width}rem; height: auto` }}
+        />
+        <Image src={newTab} alt="Open in new tab" />
+    </a>
+    <p class="text_description">{desc}</p>
+    <div class="text_icons">
+        {technologies.map((tech) => <Icon icon={`${tech}`} />)}
+    </div>
+</div>
+
+<style>
+    .text {
+        padding-left: 5rem;
+        padding-right: 2rem;
+        width: 80%;
+    }
+    .text_description {
+        font-size: 0.75rem;
+        margin: 1.5rem 0 0;
+    }
+    .text_link {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        gap: 0.3rem;
+    }
+    .text_link > img:active {
+        -webkit-transform: scale(0.95);
+        -ms-transform: scale(0.95);
+        transform: scale(0.95);
+        -webkit-transform-origin: center;
+        -ms-transform-origin: center;
+        transform-origin: center;
+    }
+    .text_icons {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: start;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-column-gap: 1.2rem;
+        -moz-column-gap: 1.2rem;
+        column-gap: 1.2rem;
+        row-gap: 0.8rem;
+        margin: 1.5rem 0 0;
+    }
+
+    @media screen and (max-width: 1000px) {
+        .text {
+            width: 100%;
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+        .text {
+            -ms-grid-column: 1;
+            -ms-grid-column-span: 1;
+            grid-column: 1 / 2;
+            -ms-grid-row: 1;
+            -ms-grid-row-span: 1;
+            grid-row: 1 / 2;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+        }
+        .text_description {
+            width: 100%;
+            text-align: center;
+        }
+        .text_link,
+        .text_icons {
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+    }
+</style>

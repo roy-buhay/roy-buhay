@@ -1,0 +1,45 @@
+---
+const { index } = Astro.props as Props;
+---
+
+<div class="splide" style={{ zIndex: index }}>
+    <div class="splide__track">
+        <ul class="splide__list">
+            <slot />
+        </ul>
+    </div>
+</div>
+
+<style>
+    .index {
+        z-index: 10;
+    }
+</style>
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"
+></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var sliders = document.getElementsByClassName("splide");
+
+        for (var i = 0; i < sliders.length; i++) {
+            new Splide(sliders[i], {
+                type: "slide",
+                arrows: false,
+                pagination: false,
+                autoWidth: true,
+            }).mount();
+        }
+    });
+</script>
+
+<style>
+    @media screen and (max-width: 750px) {
+        .splide__list {
+            justify-content: center;
+            margin-left: -2.5rem !important;
+        }
+    }
+</style>
